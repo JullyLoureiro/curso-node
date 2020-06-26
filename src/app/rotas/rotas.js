@@ -27,4 +27,18 @@ module.exports = (app) => {
         ))
         .catch(error => console.log(error))
     })
+
+    app.get('/livros/form', function(req, resp){
+        resp.marko(
+            require('../views/livros/form/form.marko')
+        )
+    })
+
+    app.post('/livros', function(req, resp){
+        const livroDao = new LivroDao(db)
+
+        livroDao.adiciona(req.body)
+        .then(resp.redirect('/livros'))
+        .catch(error => console.log(error))
+    })
 }
